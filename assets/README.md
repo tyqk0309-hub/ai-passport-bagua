@@ -17,6 +17,19 @@ Store reusable font files and generated font sources in `fonts/`.
 - Check Flash and internal-RAM impact before adding a font; the ESP32-C3 has no PSRAM.
 - Do not commit fonts whose license does not permit redistribution.
 
+### Bagua Compass Chinese subset (`fonts/NotoSansSC-Regular.otf`)
+
+| Item | Content |
+| --- | --- |
+| Source | [Noto Sans CJK SC](https://github.com/googlefonts/noto-cjk) Regular OTF |
+| License | SIL Open Font License 1.1 (redistribution allowed) |
+| Glyph inventory | `fonts/bg_symbols.txt` / `fonts/bg_symbols_raw.txt` (Bagua UI + 64 hexagram texts + ASCII/punct) |
+| Converter | `lv_font_conv` (LVGL 9.5 format), bpp=4, `--no-compress` |
+| Command | `lv_font_conv --font fonts/NotoSansSC-Regular.otf --symbols "$(cat fonts/bg_symbols_raw.txt)" --size 16 --format lvgl --bpp 4 --no-compress --lv-include lvgl.h -o main/bg_font_16.c` (use `--size 22` for `bg_font_22.c`) |
+| Outputs | `main/bg_font_16.c` (`bg_font_16`), `main/bg_font_22.c` (`bg_font_22`) |
+| Placement | Bagua UI labels (`bagua_ui.c` / `bagua_font.c`); regenerate via `tools/gen_bagua_symbols.py` when copy changes |
+| Size | ~1.0 MB source at 16px + ~1.8 MB at 22px (Flash bitmaps, no PSRAM) |
+
 ## Images
 
 Store reusable source images and generated display assets in `images/`.

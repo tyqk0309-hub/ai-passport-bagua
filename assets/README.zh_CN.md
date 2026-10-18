@@ -15,6 +15,19 @@
 - 添加字库前评估 Flash 与内部 RAM 影响；ESP32-C3 无 PSRAM。
 - 不提交许可不允许分发的字库。
 
+### 八卦罗盘中文子集（`fonts/NotoSansSC-Regular.otf`）
+
+| 项目 | 内容 |
+| --- | --- |
+| 来源 | [Noto Sans CJK SC](https://github.com/googlefonts/noto-cjk) Regular OTF |
+| 许可 | SIL Open Font License 1.1（允许分发） |
+| 字符清单 | `fonts/bg_symbols.txt` / `fonts/bg_symbols_raw.txt`（罗盘 UI + 六十四卦文案 + ASCII/标点） |
+| 转换器 | `lv_font_conv`（LVGL 9.5），bpp=4，`--no-compress` |
+| 命令 | `lv_font_conv --font fonts/NotoSansSC-Regular.otf --symbols "$(cat fonts/bg_symbols_raw.txt)" --size 16 --format lvgl --bpp 4 --no-compress --lv-include lvgl.h -o main/bg_font_16.c`（22px 同理输出 `bg_font_22.c`） |
+| 产物 | `main/bg_font_16.c`（`bg_font_16`）、`main/bg_font_22.c`（`bg_font_22`） |
+| 使用位置 | 罗盘界面（`bagua_ui.c` / `bagua_font.c`）；文案变更后用 `tools/gen_bagua_symbols.py` 重新生成清单 |
+| 体积 | 16px 源码约 1.0 MB + 22px 约 1.8 MB（位图常驻 Flash，无 PSRAM） |
+
 ## 图片（images）
 
 可复用的源图与生成的显示资产放在 `images/`。
